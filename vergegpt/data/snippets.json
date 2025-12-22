@@ -1,0 +1,15 @@
+{
+    "Python": {
+        "Web Scraper": "import requests\nfrom bs4 import BeautifulSoup\n\n# Your web scraper code here",
+        "File Organizer": "import os\nimport shutil\nfrom pathlib import Path\n\n# Your file organizer code here",
+        "API Client": "import requests\nimport json\n\n# Your API client code here"
+    },
+    "Security": {
+        "Port Scanner": "import socket\n\n# Your port scanner code here",
+        "File Hasher": "import hashlib\n\n# Your file hasher code here"
+    },
+    "Quick Tools": {
+        "Password Generator": "import secrets\nimport string\n\n# Your password generator code here",
+        "Text Formatter": "# Your text formatter code here"
+    }
+}
