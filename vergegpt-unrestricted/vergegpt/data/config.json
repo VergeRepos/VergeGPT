@@ -1,0 +1,7 @@
+{
+    "theme": "Glass Cyber",
+    "auto_backup": true,
+    "protection_mode": "strict",
+    "api_provider": "openrouter",
+    "backup_count": 5
+}
