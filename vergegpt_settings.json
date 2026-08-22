@@ -1,0 +1,8 @@
+{
+  "theme": "ChatGPT",
+  "font_size": "10",
+  "provider": "openrouter",
+  "auto_load": true,
+  "auto_check_api": true,
+  "generated_base_dir": "C:/Users/nyben/Documents/Projects/RubberDucky/1-File"
+}

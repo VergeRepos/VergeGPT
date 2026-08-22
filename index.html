@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VergeGPT Web UI</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="sidebar-header">VergeGPT</div>
+            <button class="sidebar-new-chat">+ New chat</button>
+            <div class="sidebar-chats">
+                <div class="chat-item active">Python Helper</div>
+                <div class="chat-item">Bug Fix Session</div>
+                <div class="chat-item">UI Ideas</div>
+            </div>
+        </aside>
+
+        <main class="main">
+            <header class="topbar">
+                <div class="model">Model: VergeGPT · Python Dev Mode</div>
+                <div class="status" id="status-indicator">Ready</div>
+            </header>
+
+            <section class="messages" id="messages">
+                <div class="message ai">
+                    <div class="avatar">V</div>
+                    <div class="bubble">
+                        <div class="name">VergeGPT</div>
+                        <div class="text">
+                            Here is a clean Python function and explanation. The code block below is fully copyable.
+                        </div>
+                        <div class="code-snippet" data-language="python">
+                            <div class="code-header">
+                                <span class="lang-label">python</span>
+                                <button class="copy-btn" data-target="#snippet-1">Copy</button>
+                            </div>
+                            <pre class="code" id="snippet-1"><code class="code-python">
+import time
+
+def flashy_greeting(name: str) -> None:
+    """Print a neon-style greeting for VergeGPT users."""
+    colors = ["\u001b[38;5;45m", "\u001b[38;5;219m", "\u001b[38;5;190m"]
+    reset = "\u001b[0m"
+    msg = f"VergeGPT says hi, {name}!"
+    for i, ch in enumerate(msg):
+        color = colors[i % len(colors)]
+        print(color + ch + reset, end="", flush=True)
+        time.sleep(0.03)
+print()  # newline
+
+if __name__ == "__main__":
+    flashy_greeting("Verge")
+                            </code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="message user">
+                    <div class="avatar">Y</div>
+                    <div class="bubble">
+                        <div class="name">You</div>
+                        <div class="text">Make the UI look like ChatGPT but with a Python hacker vibe.</div>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="input-bar">
+                <textarea id="user-input" class="input" rows="1" placeholder="Send a message..."></textarea>
+                <button id="send-btn" class="send-btn">Send</button>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        // Auto-resize textarea like ChatGPT
+        const input = document.getElementById('user-input');
+        input.addEventListener('input', () => {
+            input.style.height = 'auto';
+            input.style.height = Math.min(input.scrollHeight, 200) + 'px';
+        });
+
+        // Simple fake send so UI feels alive without backend
+        const messagesEl = document.getElementById('messages');
+        const statusEl = document.getElementById('status-indicator');
+        document.getElementById('send-btn').addEventListener('click', () => {
+            const text = input.value.trim();
+            if (!text) return;
+
+            const userMsg = document.createElement('div');
+            userMsg.className = 'message user';
+            userMsg.innerHTML = `
+                <div class="avatar">Y</div>
+                <div class="bubble">
+                    <div class="name">You</div>
+                    <div class="text"></div>
+                </div>
+            `;
+            userMsg.querySelector('.text').textContent = text;
+            messagesEl.appendChild(userMsg);
+
+            input.value = '';
+            input.style.height = '40px';
+            messagesEl.scrollTop = messagesEl.scrollHeight;
+
+            statusEl.textContent = 'Thinking...';
+            setTimeout(() => {
+                const aiMsg = document.createElement('div');
+                aiMsg.className = 'message ai';
+                aiMsg.innerHTML = `
+                    <div class="avatar">V</div>
+                    <div class="bubble">
+                        <div class="name">VergeGPT</div>
+                        <div class="text">Here is a Python-flavored response with a code snippet you can copy:</div>
+                        <div class="code-snippet" data-language="python">
+                            <div class="code-header">
+                                <span class="lang-label">python</span>
+                                <button class="copy-btn">Copy</button>
+                            </div>
+                            <pre class="code"><code class="code-python">def verge_square(x: int) -> int:
+    """Return x squared, VergeGPT style."""
+    return x * x
+</code></pre>
+                        </div>
+                    </div>
+                `;
+                messagesEl.appendChild(aiMsg);
+                attachCopyHandlers();
+                messagesEl.scrollTop = messagesEl.scrollHeight;
+                statusEl.textContent = 'Ready';
+            }, 600);
+        });
+
+        // Allow Enter to send, Shift+Enter = newline
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                document.getElementById('send-btn').click();
+            }
+        });
+
+        function attachCopyHandlers() {
+            document.querySelectorAll('.copy-btn').forEach(btn => {
+                if (btn._handlerAttached) return;
+                btn._handlerAttached = true;
+                btn.addEventListener('click', () => {
+                    const snippet = btn.dataset.target
+                        ? document.querySelector(btn.dataset.target)
+                        : btn.closest('.code-snippet').querySelector('pre.code');
+                    if (!snippet) return;
+                    const text = snippet.innerText;
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(text).then(() => {
+                            flashButton(btn);
+                        });
+                    } else {
+                        const ta = document.createElement('textarea');
+                        ta.value = text;
+                        document.body.appendChild(ta);
+                        ta.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(ta);
+                        flashButton(btn);
+                    }
+                });
+            });
+        }
+
+        function flashButton(btn) {
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(() => {
+                btn.textContent = 'Copy';
+                btn.classList.remove('copied');
+            }, 1200);
+        }
+
+        // Initial setup for static snippet
+        attachCopyHandlers();
+    </script>
+</body>
+</html>

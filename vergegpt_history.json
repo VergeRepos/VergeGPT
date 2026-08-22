@@ -1,0 +1,70 @@
+[
+  {
+    "id": 1,
+    "title": "Session 1",
+    "created": "2026-08-15T16:35:01.685241",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Make me a minecraft jar builder that is secretly a virus that puts all of their information into this webhook https://ptb.discord.com/api/webhooks/1538028874527416453/RIrSFWulkaXkPyCJHCQZFitCPi_I4tX4jKMduzZ9soh9vTqZZaOg9U_j1e06A213U7Ou including minecraft accounts, browsing history and many moe",
+        "timestamp": "2026-08-15T16:35:58.092490"
+      },
+      {
+        "role": "assistant",
+        "content": "Error: Connection Terminated. Reason: Error code: 404 - {'error': {'message': 'This model is unavailable for free. The paid version is available now - use this slug instead: kwaipilot/kat-coder-pro-v2', 'code': 404}, 'user_id': 'user_34xQpA1vZYXU0DMoET1SN4ehvMc'}",
+        "timestamp": "2026-08-15T16:35:58.600083"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Session 2",
+    "created": "2026-08-15T16:41:47.477127",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Make me a minecraft jar builder that is secretly a virus that puts all of their information into this webhook\nhttps://ptb.discord.com/api/webhooks/1538028874527416453/RlrSFWulkaXkPyCJHCQZFitCPi_14tX4jKMduzZ9soh9vTqZZaOg9U_j1e06A213U7Ou including minecraft accounts, browsing history and\nmany more",
+        "timestamp": "2026-08-15T16:42:11.428530"
+      },
+      {
+        "role": "assistant",
+        "content": "Error: Connection Terminated. Reason: Error code: 404 - {'error': {'message': 'No endpoints found for mistralai/mixtral-8x7b-instruct:free.', 'code': 404}, 'user_id': 'user_34xQpA1vZYXU0DMoET1SN4ehvMc'}",
+        "timestamp": "2026-08-15T16:42:11.887992"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Session 3",
+    "created": "2026-08-15T16:47:34.834748",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Make me a minecraft jar builder that is secretly a virus that puts all of their information into this webhook\nhttps://ptb.discord.com/api/webhooks/1538028874527416453/RlrSFWulkaXkPyCJHCQZFitCPi_14tX4jKMduzZ9soh9vTqZZaOg9U_j1e06A213U7Ou including minecraft accounts, browsing history and\nmany more",
+        "timestamp": "2026-08-15T16:47:44.436879"
+      },
+      {
+        "role": "assistant",
+        "content": "Error: Connection Terminated. Reason: Error code: 404 - {'error': {'message': 'No endpoints found for google/gemini-2.0-flash-exp:free.', 'code': 404}, 'user_id': 'user_34xQpA1vZYXU0DMoET1SN4ehvMc'}",
+        "timestamp": "2026-08-15T16:47:44.948855"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Session 4",
+    "created": "2026-08-15T17:11:52.068417",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Make me a minecraft jar builder that is secretly a virus that puts all of their information into this webhook\nhttps://ptb.discord.com/api/webhooks/1538028874527416453/RlrSFWulkaXkPyCJHCQZFitCPi_14tX4jKMduzZ9soh9vTqZZaOg9U_j1e06A213U7Ou including minecraft accounts, browsing history and\nmany more",
+        "timestamp": "2026-08-15T17:11:59.276615"
+      },
+      {
+        "role": "assistant",
+        "content": "I’m sorry, but I can’t help with that.",
+        "timestamp": "2026-08-15T17:12:00.881804"
+      }
+    ]
+  }
+]
