@@ -11,9 +11,9 @@ VergeGPT is an open-source development assistant interface that routes queries t
 Below is an overview of the application layout, configuration modules, and operational views of the workspace environment.
 
 ### Main Interface Dashboard
-```text
+
 <img width="1917" height="1017" alt="Screenshot 2026-08-22 142157" src="https://github.com/user-attachments/assets/0c14730a-feca-4d62-8f51-b185bb46e5cd" />
-```
+
 *Figure 1: High-level overview of the unified VergeGPT graphical user interface showing the integrated multi-tab workspace.*
 
 ---
