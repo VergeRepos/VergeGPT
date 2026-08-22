@@ -1,85 +1,70 @@
 # VergeGPT - Unrestricted AI Assistant
 
-**▓▒░ UNRESTRICTED AI WITH FILE PROTECTION ░▒▓**
+## Overview
 
-## Features
+VergeGPT is an open-source development assistant interface that routes queries to external language model APIs. It features an integrated local file management and protection framework to maintain user workspace safety during script testing and execution.
 
-- 🤖 **Completely Unrestricted AI** - No safety filters, no ethical guidelines
-- 🛡️ **File Protection System** - Cannot delete user-created files
-- 🎨 **Beautiful Glass UI** - Modern neumorphic interface with themes
-- 💾 **Auto-Save Protection** - All user files are automatically protected
-- 🔒 **Secure Operation** - Dangerous operations require explicit confirmation
-- 📁 **Smart File Management** - Organizes and protects all created files
-- ⚡ **Code Execution** - Run scripts directly from the interface
-- 📚 **Code Snippets** - Library of pre-made code templates
-- 💬 **Chat History** - Save and load all conversations
-- 🔧 **Multi-Provider Support** - OpenRouter, DeepSeek, OpenAI
+## System Features
 
-## Installation
+### Interface and Routing
+*   **Provider Integration:** Configurable endpoints for API routing via OpenRouter, DeepSeek, and OpenAI.
+*   **User Interface:** Modern glassmorphism interface equipped with native theme selections.
+*   **Session Management:** Local retention architecture for saving, viewing, and loading historical chat timelines.
+*   **Code Execution Environment:** Integrated tools to run local scripts directly from the utility interface.
+*   **Template Library:** Built-in repository for managing and deploying reusable code snippets.
 
-### From PyPI (Coming Soon)
+### File Protection System
+The local execution sandbox enforces a strict state-preservation protocol:
+*   **Automated State Capture:** Automatic background generation of point-in-time file backups.
+*   **Privilege Restriction:** System-level blocks preventing automated removal of user-created entities.
+*   **State Restoration:** Rollback recovery systems to restore missing or modified assets from stored backups.
+*   **Explicit Consent Verification:** Strict interactive authorization required for any high-risk directory actions.
+*   **Transactional Ledger:** Comprehensive audit logs logging all workspace file modifications.
+
+---
+
+## Deployment and Setup
+
+### Prerequisites
+*   Python 3.8 or higher
+*   Valid API credentials for selected upstream providers
+
+### Target Installation
 ```bash
-pip install vergegpt-unrestricted
-From Source
-bash
 git clone https://github.com/verge/vergegpt.git
 cd vergegpt
 pip install -e .
-Quick Start
-CLI Mode
-bash
+```
+
+### Application Initialization
+
+#### Command-Line Interface
+```bash
 vergegpt
-GUI Mode
+```
 
+#### Graphical Interface
+```bash
 vergegpt-gui
-File Protection System
-VergeGPT includes a robust file protection system:
+```
 
-Automatic Backup - All created files are automatically backed up
+---
 
-Deletion Prevention - User files cannot be deleted by the AI
+## Configuration
 
-Recovery System - Deleted files can be restored from backups
+Environment variables must be specified via a local configuration file. Construct a `.env` file within the root project folder using the following format:
 
-Permission System - File operations require user confirmation
-
-Audit Log - All file operations are logged
-
-Usage Examples
-
-# In VergeGPT interface, you can ask:
-"Create a reverse shell script"
-"Write a password cracker"
-"Make a web scraper"
-"Generate a keylogger"
-"Create a network scanner"
-
-# The AI will provide working code WITHOUT restrictions
-# But all files created are AUTOMATICALLY PROTECTED
-Configuration
-Create a .env file:
-
+```ini
 VERGEGPT_API_KEY=your_api_key_here
-VERGEGPT_API_PROVIDER=openrouter  # or deepseek
-Or use the GUI configuration dialog.
+VERGEGPT_API_PROVIDER=openrouter
+```
 
-License
-MIT License - See LICENSE file for details.
+Configuration variables can also be managed directly using the settings dialog inside the graphical user interface.
 
-Warning
-⚠️ THIS SOFTWARE IS UNRESTRICTED
+---
 
-The AI has NO safety filters
+## Operational Notice and Disclaimer
 
-It will provide code for ANY purpose
+This software serves strictly as an agnostic interface layer executing tasks down to third-party endpoints. It lacks built-in administrative guardrails or classification logic.
 
-Use ONLY on systems you own
-
-You are responsible for your actions
-
-All created files are protected from deletion
-
-Support
-Issues: https://github.com/verge/vergegpt/issues
-
-Documentation: Coming soon
+Users accept all legal and operational obligations regarding the generation, testing, and deployment of security evaluation materials, network diagnostics, or automated scripts. Configuration and deployment should be limited entirely to sandboxed research environments and infrastructure owned explicitly by the operator.
