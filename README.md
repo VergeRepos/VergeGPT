@@ -4,6 +4,37 @@
 
 VergeGPT is an open-source development assistant interface that routes queries to external language model APIs. It features an integrated local file management and protection framework to maintain user workspace safety during script testing and execution.
 
+---
+
+## User Interface
+
+Below is an overview of the application layout, configuration modules, and operational views of the workspace environment.
+
+### Main Interface Dashboard
+```text
+┌────────────────────────────────────────────────────────────────────────┐
+│ VergeGPT                                                     [-] [o] [x]│
+├────────────────────────────────────────────────────────────────────────┤
+│ Provider: openrouter | Model: nvidia/nemotron-3-super... | Theme: ...  │
+├────────────────────────────────────────────────────────────────────────┤
+│  Chats        │ [ Chat ] [ Code ] [ Snippets ] [ Files ] [ Terminal ]  │
+│  ┌──────────┐ │ ┌────────────────────────────────────────────────────┐ │
+│  │+ New Chat│ │ │                                                    │ │
+│  ├──────────┤ │ │                                                    │ │
+│  │Session 1 │ │ │                                                    │ │
+│  │Session 2 │ │ │                                                    │ │
+│  │Session 3 │ │ │                                                    │ │
+│  │Session 4 │ │ │                                                    │ │
+│  │Session 5 │ │ │                                                    │ │
+│  └──────────┘ │ └────────────────────────────────────────────────────┘ │
+├───────────────┴────────────────────────────────────────────────────────┤
+│ [Settings]                                                    [> Send] │
+└────────────────────────────────────────────────────────────────────────┘
+```
+*Figure 1: High-level overview of the unified VergeGPT graphical user interface showing the integrated multi-tab workspace.*
+
+---
+
 ## System Features
 
 ### Interface and Routing
@@ -31,7 +62,7 @@ The local execution sandbox enforces a strict state-preservation protocol:
 
 ### Target Installation
 ```bash
-git clone https://github.com/verge/vergegpt.git
+git clone https://github.com
 cd vergegpt
 pip install -e .
 ```
