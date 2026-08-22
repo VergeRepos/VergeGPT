@@ -12,24 +12,7 @@ Below is an overview of the application layout, configuration modules, and opera
 
 ### Main Interface Dashboard
 ```text
-┌────────────────────────────────────────────────────────────────────────┐
-│ VergeGPT                                                     [-] [o] [x]│
-├────────────────────────────────────────────────────────────────────────┤
-│ Provider: openrouter | Model: nvidia/nemotron-3-super... | Theme: ...  │
-├────────────────────────────────────────────────────────────────────────┤
-│  Chats        │ [ Chat ] [ Code ] [ Snippets ] [ Files ] [ Terminal ]  │
-│  ┌──────────┐ │ ┌────────────────────────────────────────────────────┐ │
-│  │+ New Chat│ │ │                                                    │ │
-│  ├──────────┤ │ │                                                    │ │
-│  │Session 1 │ │ │                                                    │ │
-│  │Session 2 │ │ │                                                    │ │
-│  │Session 3 │ │ │                                                    │ │
-│  │Session 4 │ │ │                                                    │ │
-│  │Session 5 │ │ │                                                    │ │
-│  └──────────┘ │ └────────────────────────────────────────────────────┘ │
-├───────────────┴────────────────────────────────────────────────────────┤
-│ [Settings]                                                    [> Send] │
-└────────────────────────────────────────────────────────────────────────┘
+<img width="1917" height="1017" alt="Screenshot 2026-08-22 142157" src="https://github.com/user-attachments/assets/0c14730a-feca-4d62-8f51-b185bb46e5cd" />
 ```
 *Figure 1: High-level overview of the unified VergeGPT graphical user interface showing the integrated multi-tab workspace.*
 
