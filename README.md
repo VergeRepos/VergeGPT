@@ -13,9 +13,6 @@ Below is an overview of the application layout, configuration modules, and opera
 ### Main Interface Dashboard
 
 <img src="https://github.com/user-attachments/assets/0c14730a-feca-4d62-8f51-b185bb46e5cd" width="500">
-
-*Figure 1: High-level overview of the unified VergeGPT graphical user interface showing the integrated multi-tab workspace.*
-
 ---
 
 ## System Features
