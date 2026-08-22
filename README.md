@@ -74,8 +74,10 @@ Configuration variables can also be managed directly using the settings dialog i
 
 ---
 
+---
+
 ## Operational Notice and Disclaimer
 
-This software serves strictly as an agnostic interface layer executing tasks down to third-party endpoints. It lacks built-in administrative guardrails or classification logic.
+This software serves strictly as an agnostic interface layer executing tasks down to third-party endpoints. It is provided "as-is," and this software may or may not work depending on upstream API stability, environment configurations, or third-party modifications. It lacks built-in administrative guardrails or classification logic.
 
 Users accept all legal and operational obligations regarding the generation, testing, and deployment of security evaluation materials, network diagnostics, or automated scripts. Configuration and deployment should be limited entirely to sandboxed research environments and infrastructure owned explicitly by the operator.
