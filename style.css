@@ -247,7 +247,6 @@ body {
   color: #e5e7eb;
 }
 
-/* Simple python-ish syntax highlight */
 .code-python {
   color: #e5e7eb;
 }
@@ -312,7 +311,6 @@ body {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
 }
 
-/* Scrollbar styling */
 .messages::-webkit-scrollbar,
 .sidebar-chats::-webkit-scrollbar {
   width: 8px;
