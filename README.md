@@ -42,7 +42,7 @@ The local execution sandbox enforces a strict state-preservation protocol:
 
 ### Target Installation
 ```bash
-git clone [https://github.com](https://github.com/VergeRepos/VergeGPT)
+git clone https://github.com/VergeRepos/VergeGPT
 pip install -e .
 ```
 
