@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import os
 import sys
 import time
@@ -24,7 +23,6 @@ from pygments import lex
 from pygments.formatters import HtmlFormatter
 import html
 
-# --- Check Dependencies (Manual) ---
 def check_dependencies():
     required_packages = [
         ("openai", "openai"),
@@ -55,17 +53,14 @@ def check_dependencies():
         print("=" * 60)
         sys.exit(1)
 
-# Run check before importing anything else
 check_dependencies()
 
-# --- Imports ---
 import openai
 from dotenv import load_dotenv, set_key
 from colorama import init, Fore, Style
 import pygments.lexers
 import pygments.formatters
 
-# --- Enhanced Configuration with Glass/Neumorphism Themes ---
 class Config:
     """System Configuration & Constants"""
     
@@ -93,9 +88,8 @@ class Config:
     SCRIPTS_DIR = "verge_scripts"
     SNIPPETS_FILE = "verge_snippets.json"
     SETTINGS_FILE = "vergegpt_settings.json"
-    GENERATED_BASE_DIR = None  # base directory for AI-generated files
+    GENERATED_BASE_DIR = None
     
-    # Glass/Neumorphism UI Colors
     THEMES = {
         'ChatGPT': {
             'bg_dark': '#202123',
@@ -208,7 +202,6 @@ class Config:
             return None
         return cls.PROVIDERS[cls.API_PROVIDER]
 
-# --- Modern Notebook with Glass Effects ---
 class ModernNotebook(ttk.Notebook):
     def __init__(self, master=None, **kwargs):
         super().__init__(master, **kwargs)
@@ -218,7 +211,6 @@ class ModernNotebook(ttk.Notebook):
     def configure_style(self):
         colors = Config.get_colors()
         
-        # Configure notebook style
         self.style.configure('Modern.TNotebook',
                            background=colors['bg_medium'],
                            borderwidth=0)
@@ -235,7 +227,6 @@ class ModernNotebook(ttk.Notebook):
                       foreground=[('selected', colors['bg_dark']),
                                 ('active', colors['secondary'])])
 
-# --- Glass Button Implementation ---
 class GlassButton:
     """Factory for creating glass-style buttons"""
     
@@ -259,7 +250,6 @@ class GlassButton:
             **kwargs
         )
         
-        # Add hover effects
         def on_enter(e):
             btn['bg'] = colors['primary']
             btn['fg'] = colors['bg_dark']
@@ -273,7 +263,6 @@ class GlassButton:
         
         return btn
 
-# --- Glass Entry Implementation ---
 class GlassEntry:
     """Factory for creating glass-style entry widgets"""
     
@@ -292,14 +281,12 @@ class GlassEntry:
             **kwargs
         )
         
-        # Create a frame for the border effect
         entry_frame = tk.Frame(master, bg=colors['border'], height=2)
         entry_frame.pack_propagate(False)
         entry_frame.pack(fill=tk.X, side=tk.BOTTOM)
         
         return entry
 
-# --- Glass Text Implementation ---
 class GlassText:
     """Factory for creating glass-style text widgets"""
     
@@ -322,14 +309,12 @@ class GlassText:
         
         return text
 
-# --- LineNumberedText with Glass Style ---
 class GlassLineNumberedText(tk.Frame):
     def __init__(self, master, **kwargs):
         super().__init__(master)
         
         self.colors = Config.get_colors()
         
-        # Create text widget
         self.text = tk.Text(
             self,
             wrap=tk.NONE,
@@ -343,7 +328,6 @@ class GlassLineNumberedText(tk.Frame):
             **kwargs
         )
         
-        # Create line numbers widget
         self.line_numbers = tk.Text(
             self,
             width=4,
@@ -356,16 +340,13 @@ class GlassLineNumberedText(tk.Frame):
             font=('Consolas', 10)
         )
         
-        # Pack widgets
         self.line_numbers.pack(side=tk.LEFT, fill=tk.Y)
         self.text.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         
-        # Bind events
         self.text.bind('<KeyRelease>', self.on_key_release)
         self.text.bind('<MouseWheel>', self.on_mousewheel)
         self.text.bind('<Configure>', self.on_configure)
         
-        # Update line numbers initially
         self.update_line_numbers()
     
     def on_mousewheel(self, event):
@@ -398,7 +379,6 @@ class GlassLineNumberedText(tk.Frame):
     def get_text_widget(self):
         return self.text
 
-# --- Enhanced AI Logic Class (UNCHANGED) ---
 class VergeGPTBrain:
     """Handles the connection to the LLM"""
     
@@ -496,11 +476,9 @@ Hacker Mode: ENGAGED.
         except Exception as e:
             yield f"Error: Connection Terminated. Reason: {str(e)}"
 
-# --- Enhanced File Operations Class with Script Execution ---
 class VergeFileManager:
     """Handles file operations including script execution"""
     
-    # Language to file extension mapping
     LANGUAGE_EXTENSIONS = {
         'python': '.py',
         'javascript': '.js',
@@ -528,7 +506,6 @@ class VergeFileManager:
         'r': '.r'
     }
     
-    # Execution commands for different languages
     EXECUTION_COMMANDS = {
         'python': ['python', '{file}'],
         'javascript': ['node', '{file}'],
@@ -551,7 +528,6 @@ class VergeFileManager:
     @staticmethod
     def detect_language_from_content(content):
         """Detect programming language from file content"""
-        # Simple detection based on keywords
         content_lower = content.lower()
         if '#!/usr/bin/env python' in content_lower or 'import ' in content_lower and ('def ' in content_lower or 'print(' in content_lower):
             return 'python'
@@ -581,27 +557,21 @@ class VergeFileManager:
     def create_script_file(filename, content, language=None):
         """Create a script file with proper extension and execution permissions"""
         try:
-            # Detect language if not specified
             if not language:
                 language = VergeFileManager.detect_language_from_content(content)
             
-            # Get proper file extension
             extension = VergeFileManager.LANGUAGE_EXTENSIONS.get(language.lower(), '.txt')
             
-            # Ensure filename has proper extension
             if not filename.endswith(extension):
                 filename += extension
             
-            # Add VergeGPT prefix if not present
             if not any(prefix in filename.lower() for prefix in ['verge', 'vergegpt']):
                 base_name = os.path.basename(filename)
                 dir_name = os.path.dirname(filename)
                 filename = os.path.join(dir_name, f"VergeGPT_{base_name}")
             
-            # Create directory if it doesn't exist
             os.makedirs(os.path.dirname(os.path.abspath(filename)), exist_ok=True)
             
-            # Add shebang for Unix-like systems if applicable
             if language in ['python', 'bash', 'shell'] and not content.startswith('#!/'):
                 shebangs = {
                     'python': '#!/usr/bin/env python3\n',
@@ -614,7 +584,6 @@ class VergeFileManager:
             with open(filename, 'w', encoding='utf-8') as f:
                 f.write(content)
             
-            # Make executable on Unix-like systems
             if os.name != 'nt':  # Not Windows
                 os.chmod(filename, 0o755)
             
@@ -626,7 +595,6 @@ class VergeFileManager:
     def execute_script(filename, timeout=30):
         """Execute a script file and return output"""
         try:
-            # Read file to detect language
             with open(filename, 'r', encoding='utf-8') as f:
                 content = f.read()
             
@@ -635,7 +603,6 @@ class VergeFileManager:
             if language not in VergeFileManager.EXECUTION_COMMANDS:
                 return False, f"Cannot execute {language} scripts automatically"
             
-            # Prepare execution command
             base_name = os.path.splitext(os.path.basename(filename))[0]
             cmd_template = VergeFileManager.EXECUTION_COMMANDS[language]
             cmd = []
@@ -650,7 +617,6 @@ class VergeFileManager:
                 else:
                     cmd.append(part)
             
-            # Execute the script
             result = subprocess.run(
                 cmd,
                 capture_output=True,
@@ -679,7 +645,6 @@ class VergeFileManager:
         """Get list of supported programming languages"""
         return list(VergeFileManager.LANGUAGE_EXTENSIONS.keys())
 
-# --- Code Formatter and Indenter ---
 class CodeFormatter:
     """Handles code formatting and auto-indentation"""
     
@@ -712,16 +677,13 @@ class CodeFormatter:
         for line in lines:
             line = line.rstrip()
             
-            # Skip empty lines
             if not line.strip():
                 formatted_lines.append('')
                 continue
             
-            # Remove trailing whitespace and add proper indentation
             indent_str = '    ' * indent_level
             formatted_lines.append(indent_str + line.lstrip())
             
-            # Adjust indent level for next line
             if line.strip().endswith((':',)):
                 indent_level += 1
             elif line.strip().startswith(('return', 'break', 'continue', 'pass')):
@@ -747,7 +709,6 @@ class CodeFormatter:
                 formatted_lines.append('')
                 continue
             
-            # Adjust indent based on braces
             line_stripped = line.strip()
             if line_stripped.endswith('{'):
                 indent_str = '    ' * indent_level
@@ -776,7 +737,6 @@ class CodeFormatter:
                 formatted_lines.append('')
                 continue
             
-            # Adjust indent for HTML tags
             if line.startswith('</'):
                 indent_level = max(0, indent_level - 1)
             
@@ -830,7 +790,6 @@ class CodeFormatter:
                 formatted_lines.append('')
                 continue
             
-            # Adjust indent based on braces
             line_stripped = line.strip()
             if line_stripped.endswith('{'):
                 indent_str = '    ' * indent_level
@@ -846,7 +805,6 @@ class CodeFormatter:
         
         return '\n'.join(formatted_lines)
 
-# --- Code Snippet Manager ---
 class SnippetManager:
     """Manages code snippets for quick insertion"""
     
@@ -868,7 +826,6 @@ class SnippetManager:
         except Exception:
             pass
         
-        # Default snippets
         return {
             "Python": {
                 "Web Scraper": '''import requests
@@ -1100,7 +1057,6 @@ print(f"SHA256: {hash_value}")'''
         """Get all snippet names in a category"""
         return list(self.snippets.get(category, {}).keys())
 
-# --- Syntax Highlighter ---
 class SyntaxHighlighter:
     """Syntax highlighting for code"""
     
@@ -1127,7 +1083,6 @@ class SyntaxHighlighter:
             else:
                 return code
             
-            # Create a simple formatter for terminal output
             formatter = pygments.formatters.TerminalFormatter()
             highlighted = pygments.highlight(code, lexer, formatter)
             return highlighted
@@ -1143,7 +1098,6 @@ class SyntaxHighlighter:
         except Exception:
             return "text"
 
-# --- Chat History Manager ---
 class ChatHistory:
     def __init__(self):
         self.history_file = Config.HISTORY_FILE
@@ -1208,7 +1162,6 @@ class ChatHistory:
         """Get list of session titles"""
         return [f"{s['id']}: {s['title']} ({len(s['messages'])} messages)" for s in self.sessions]
 
-# --- REVAMPED GUI with Glass/Neumorphism Design ---
 class VergeGPTGUI:
     def __init__(self, root):
         self.root = root
@@ -1219,32 +1172,26 @@ class VergeGPTGUI:
         self.snippet_manager = SnippetManager()
         self.syntax_highlighter = SyntaxHighlighter()
         
-        # State variables
         self.is_streaming = False
         self.current_streaming_thread = None
-        self.streaming_pos = None  # kept for backward compatibility, not used in new UI
-        self.streaming_start_index = None  # start index of the current streaming message
+        self.streaming_pos = None 
+        self.streaming_start_index = None 
         self.current_response_content = ""
-        self.streaming_session = None  # session object this streaming response belongs to
+        self.streaming_session = None  
         self.always_on_top = False
         
-        # Load settings
         self.load_settings()
         
-        # Initialize GUI
         self.setup_gui()
         self.init_snow_background()
         self.check_api_key()
         self.create_new_session()
         self.setup_scripts_directory()
         
-        # Configure text tags
         self.configure_text_tags()
 
-        # Bind global shortcuts (Ctrl+N, Ctrl+L, etc.)
         self.bind_shortcuts()
 
-        # Initialize info bar text
         self.update_info_bar()
 
     def setup_gui(self):
@@ -1255,29 +1202,23 @@ class VergeGPTGUI:
         colors = Config.get_colors()
         self.root.configure(bg=colors['bg_dark'])
         
-        # Configure ttk styles
         self.style = ttk.Style()
         self.style.theme_use('clam')
         
-        # Snowflake background canvas (behind everything)
         self.bg_canvas = tk.Canvas(self.root, bg=colors['bg_dark'], highlightthickness=0, bd=0)
         self.bg_canvas.pack(fill=tk.BOTH, expand=True)
         
-        # Main container (placed on top of canvas)
         main_container = tk.Frame(
             self.root,
             bg=colors['bg_medium'],
             highlightbackground=colors['border'],
             highlightthickness=1,
         )
-        # Use place so it sits above the background canvas
         main_container.place(relx=0, rely=0, relwidth=1, relheight=1, x=20, y=20)
         
-        # ===== HEADER (top bar similar to ChatGPT) =====
         header_frame = tk.Frame(main_container, bg=colors['bg_medium'])
         header_frame.pack(fill=tk.X, pady=(0, 10))
         
-        # App title on the left
         title_label = tk.Label(
             header_frame,
             text="VergeGPT",
@@ -1287,11 +1228,9 @@ class VergeGPTGUI:
         )
         title_label.pack(side=tk.LEFT, padx=20, pady=10)
         
-        # Right-side controls (status + quick actions)
         header_right = tk.Frame(header_frame, bg=colors['bg_medium'])
         header_right.pack(side=tk.RIGHT, padx=16, pady=8)
 
-        # Clear chat button
         clear_btn = GlassButton.create(
             header_right,
             text="Clear chat",
@@ -1299,7 +1238,6 @@ class VergeGPTGUI:
         )
         clear_btn.pack(side=tk.RIGHT, padx=(8, 0))
 
-        # Export current chat
         export_btn = GlassButton.create(
             header_right,
             text="Export",
@@ -1307,7 +1245,6 @@ class VergeGPTGUI:
         )
         export_btn.pack(side=tk.RIGHT, padx=(8, 0))
 
-        # Delete current chat
         delete_btn = GlassButton.create(
             header_right,
             text="Delete",
@@ -1315,7 +1252,6 @@ class VergeGPTGUI:
         )
         delete_btn.pack(side=tk.RIGHT, padx=(8, 0))
 
-        # Rename current chat
         rename_btn = GlassButton.create(
             header_right,
             text="Rename",
@@ -1323,7 +1259,6 @@ class VergeGPTGUI:
         )
         rename_btn.pack(side=tk.RIGHT, padx=(8, 0))
 
-        # Status text
         self.status_var = tk.StringVar(value="Ready")
         status_label = tk.Label(
             header_right,
@@ -1334,7 +1269,6 @@ class VergeGPTGUI:
         )
         status_label.pack(side=tk.RIGHT)
         
-        # Info bar under header (provider/model/theme)
         info_frame = tk.Frame(main_container, bg=colors['bg_medium'])
         info_frame.pack(fill=tk.X, pady=(0, 4))
 
@@ -1349,11 +1283,9 @@ class VergeGPTGUI:
         )
         info_label.pack(fill=tk.X, padx=20)
 
-        # ===== MAIN CONTENT AREA =====
         content_frame = tk.Frame(main_container, bg=colors['bg_medium'])
         content_frame.pack(fill=tk.BOTH, expand=True)
 
-        # Sidebar (left) + main panel (right), similar to ChatGPT layout
         sidebar_frame = tk.Frame(content_frame, bg=colors['bg_dark'], width=260)
         sidebar_frame.pack(side=tk.LEFT, fill=tk.Y)
         sidebar_frame.pack_propagate(False)
@@ -1361,13 +1293,11 @@ class VergeGPTGUI:
         main_panel_frame = tk.Frame(content_frame, bg=colors['bg_medium'])
         main_panel_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
-        # Build sidebar and main notebook
         self.setup_sidebar(sidebar_frame)
 
         self.notebook = ModernNotebook(main_panel_frame, style='Modern.TNotebook')
         self.notebook.pack(fill=tk.BOTH, expand=True, padx=1, pady=1)
         
-        # Create sections
         self.create_chat_section()
         self.create_code_section()
         self.create_snippets_section()
@@ -1375,7 +1305,6 @@ class VergeGPTGUI:
         self.create_terminal_section()
         self.create_settings_section()
         
-        # ===== INPUT AREA (bottom message bar) =====
         self.setup_input_area(main_container)
 
     def create_chat_section(self):
@@ -1383,8 +1312,6 @@ class VergeGPTGUI:
         colors = Config.get_colors()
         chat_frame = tk.Frame(self.notebook, bg=colors['bg_medium'])
         
-        # Chat display
-        # Use a clean, proportional font and subtle colors similar to ChatGPT
         self.chat_display = tk.Text(
             chat_frame,
             wrap=tk.WORD,
@@ -1399,7 +1326,6 @@ class VergeGPTGUI:
         )
         self.chat_display.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
         
-        # Add scrollbar
         scrollbar = tk.Scrollbar(chat_frame)
         scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
         self.chat_display.config(yscrollcommand=scrollbar.set)
@@ -1414,11 +1340,9 @@ class VergeGPTGUI:
         colors = Config.get_colors()
         code_frame = tk.Frame(self.notebook, bg=colors['bg_medium'])
         
-        # Toolbar
         toolbar = tk.Frame(code_frame, bg=colors['bg_medium'], height=50)
         toolbar.pack(fill=tk.X, pady=(0, 10))
         
-        # Language selection
         lang_frame = tk.Frame(toolbar, bg=colors['bg_medium'])
         lang_frame.pack(side=tk.LEFT, padx=10)
         
@@ -1431,11 +1355,9 @@ class VergeGPTGUI:
                                  state="readonly", width=15)
         lang_combo.pack(side=tk.LEFT, padx=5)
         
-        # Code actions
         actions_frame = tk.Frame(toolbar, bg=colors['bg_medium'])
         actions_frame.pack(side=tk.RIGHT, padx=10)
         
-        # Create action buttons
         actions = [
             ("Format", self.format_current_code),
             ("Run", self.run_current_code),
@@ -1446,13 +1368,11 @@ class VergeGPTGUI:
             btn = GlassButton.create(actions_frame, text=text, command=command)
             btn.pack(side=tk.LEFT, padx=2)
         
-        # Code editor with line numbers
         self.code_widget = GlassLineNumberedText(code_frame)
         self.code_widget.pack(fill=tk.BOTH, expand=True, padx=10, pady=5)
         
         self.code_editor = self.code_widget.get_text_widget()
         
-        # Default code
         default_code = '''#!/usr/bin/env python3
 # VergeGPT Glass Edition
 
@@ -1475,7 +1395,6 @@ if __name__ == "__main__":
                 bg=colors['bg_medium'], fg=colors['primary'],
                 font=('Segoe UI', 14, 'bold')).pack(pady=20)
         
-        # Snippet list
         list_frame = tk.Frame(snippets_frame, bg=colors['bg_light'])
         list_frame.pack(fill=tk.BOTH, expand=True, padx=20, pady=10)
         
@@ -1491,13 +1410,11 @@ if __name__ == "__main__":
         )
         self.snippet_list.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
         
-        # Scrollbar
         scrollbar = tk.Scrollbar(list_frame)
         scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
         self.snippet_list.config(yscrollcommand=scrollbar.set)
         scrollbar.config(command=self.snippet_list.yview)
         
-        # Load snippets
         for category in self.snippet_manager.categories:
             self.snippet_list.insert(tk.END, f"📁 {category}")
             for snippet in self.snippet_manager.get_snippets_in_category(category):
@@ -1510,11 +1427,9 @@ if __name__ == "__main__":
         colors = Config.get_colors()
         file_frame = tk.Frame(self.notebook, bg=colors['bg_medium'])
         
-        # File browser
         browser_frame = tk.Frame(file_frame, bg=colors['bg_light'])
         browser_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
         
-        # File list
         self.file_listbox = tk.Listbox(
             browser_frame,
             bg=colors['bg_light'],
@@ -1527,13 +1442,11 @@ if __name__ == "__main__":
         )
         self.file_listbox.pack(fill=tk.BOTH, expand=True, side=tk.LEFT, padx=(0, 5))
         
-        # Scrollbar
         scrollbar = tk.Scrollbar(browser_frame)
         scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
         self.file_listbox.config(yscrollcommand=scrollbar.set)
         scrollbar.config(command=self.file_listbox.yview)
         
-        # Refresh button
         refresh_btn = GlassButton.create(file_frame, text="🔄 Refresh", command=self.refresh_file_list)
         refresh_btn.pack(side=tk.BOTTOM, pady=10)
         
@@ -1546,7 +1459,6 @@ if __name__ == "__main__":
         colors = Config.get_colors()
         terminal_frame = tk.Frame(self.notebook, bg=colors['bg_medium'])
         
-        # Terminal output
         self.terminal_output = tk.Text(
             terminal_frame,
             wrap=tk.WORD,
@@ -1561,7 +1473,6 @@ if __name__ == "__main__":
         )
         self.terminal_output.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
         
-        # Scrollbar
         scrollbar = tk.Scrollbar(terminal_frame)
         scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
         self.terminal_output.config(yscrollcommand=scrollbar.set)
@@ -1569,7 +1480,6 @@ if __name__ == "__main__":
         
         self.terminal_output.config(state=tk.DISABLED)
         
-        # Welcome message
         self.terminal_output.config(state=tk.NORMAL)
         welcome_msg = "VergeGPT System Console\nType 'help' for commands.\n\n"
         self.terminal_output.insert(tk.END, welcome_msg)
@@ -1582,7 +1492,6 @@ if __name__ == "__main__":
         colors = Config.get_colors()
         settings_frame = tk.Frame(self.notebook, bg=colors['bg_medium'])
         
-        # Theme selection
         theme_frame = tk.Frame(settings_frame, bg=colors['bg_medium'])
         theme_frame.pack(fill=tk.X, padx=20, pady=20)
         
@@ -1598,11 +1507,9 @@ if __name__ == "__main__":
                                command=self.on_theme_change)
             rb.pack(anchor='w', padx=20, pady=5)
         
-        # Apply button
         apply_btn = GlassButton.create(settings_frame, text="Apply Theme", command=self.apply_theme)
         apply_btn.pack(pady=10)
         
-        # Visual effects section
         effects_frame = tk.Frame(settings_frame, bg=colors['bg_medium'])
         effects_frame.pack(fill=tk.X, padx=20, pady=(10, 20))
         tk.Label(
@@ -1634,11 +1541,9 @@ if __name__ == "__main__":
         input_frame = tk.Frame(parent, bg=colors['bg_medium'], height=80)
         input_frame.pack(fill=tk.X, side=tk.BOTTOM, pady=(10, 0))
         
-        # Quick actions
         quick_frame = tk.Frame(input_frame, bg=colors['bg_medium'])
         quick_frame.pack(side=tk.LEFT, padx=10)
         
-        # Attach, voice, image generation, video generation
         quick_actions = [
             ("📎", self.attach_file),
             ("🎤", self.voice_input),
@@ -1649,7 +1554,6 @@ if __name__ == "__main__":
             btn = GlassButton.create(quick_frame, text=icon, command=cmd, width=40, height=40)
             btn.pack(side=tk.LEFT, padx=2)
         
-        # Input field (multi-line like ChatGPT)
         self.input_entry = tk.Text(
             input_frame,
             bg=colors['bg_light'],
@@ -1663,15 +1567,12 @@ if __name__ == "__main__":
         )
         self.input_entry.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=10, pady=16)
 
-        # Enter = send, Shift+Enter = newline
         self.input_entry.bind('<Return>', self.send_message)
         self.input_entry.bind('<Shift-Return>', self.add_newline)
         
-        # Send button
         send_btn = GlassButton.create(input_frame, text="➤ Send", command=self.send_message)
         send_btn.pack(side=tk.RIGHT, padx=10, pady=16)
 
-    # --- AI FUNCTIONALITY METHODS ---
     
     def load_settings(self):
         """Load application settings"""
@@ -1717,13 +1618,11 @@ if __name__ == "__main__":
                 self.snowflakes.append({"id": flake_id, "speed": speed, "size": size})
             self.animate_snow()
         except Exception:
-            # If anything goes wrong, just skip snow without breaking the app.
             self.snowflakes = []
     
     def animate_snow(self):
         """Animate snowflakes on the background canvas."""
         if not getattr(Config, 'SNOW_ENABLED', True):
-            # Clear any existing flakes and stop animating
             if hasattr(self, "snowflakes"):
                 for flake in self.snowflakes:
                     try:
@@ -1795,7 +1694,6 @@ if __name__ == "__main__":
         if not base_dir:
             return None
         
-        # Derive folder from the session this streaming belongs to (if any)
         session_title = None
         session_src = getattr(self, 'streaming_session', None) or getattr(self.history, 'current_session', None)
         if session_src:
@@ -1825,7 +1723,6 @@ if __name__ == "__main__":
     def configure_text_tags(self):
         """Configure text tags for chat"""
         colors = Config.get_colors()
-        # User messages: aligned with ChatGPT-style "You" bubbles
         self.chat_display.tag_configure(
             "user",
             foreground=colors['text'],
@@ -1835,7 +1732,6 @@ if __name__ == "__main__":
             lmargin2=10,
             rmargin=10,
         )
-        # AI messages: slightly different background
         self.chat_display.tag_configure(
             "ai",
             foreground=colors['text'],
@@ -1845,7 +1741,6 @@ if __name__ == "__main__":
             lmargin2=10,
             rmargin=10,
         )
-        # System/info messages
         self.chat_display.tag_configure(
             "system",
             foreground=colors['accent'],
@@ -1858,7 +1753,6 @@ if __name__ == "__main__":
     
     def update_status(self, message):
         """Update status bar"""
-        # Keep status text clean, similar to ChatGPT's subtle status messages
         self.status_var.set(message)
     
     def check_api_key(self):
@@ -1877,7 +1771,6 @@ if __name__ == "__main__":
         try:
             self.update_status("Verifying neural link...")
             self.brain = VergeGPTBrain(key, self.update_chat)
-            # Test connection
             self.brain.client.models.list()
             self.update_status("Neural link established - Ready")
             self.show_terminal_output("VergeGPT Uplink Established")
@@ -1914,7 +1807,6 @@ if __name__ == "__main__":
         api_entry.pack(pady=5)
         api_entry.focus()
         
-        # Provider selection
         provider_frame = tk.Frame(dialog, bg=colors['bg_dark'])
         provider_frame.pack(pady=5)
         
@@ -1954,36 +1846,30 @@ if __name__ == "__main__":
     
     def send_message(self, event=None):
         """Send message to AI"""
-        # Prevent spamming while a response is streaming
         if self.is_streaming:
             return "break"
 
-        # Read from multi-line Text widget
         message = self.input_entry.get("1.0", "end-1c").strip()
         if not message:
             return "break"
 
-        # Ensure brain is initialized; if not, show a clear error in chat and status
         if not self.brain:
             self.display_message("System", "AI is not ready. Configure a valid API key in Settings.", "error")
             self.update_status("AI not ready - missing or invalid API key")
             return "break"
 
-        # Clear input box and show the user message immediately
         self.input_entry.delete("1.0", tk.END)
         self.display_message("User", message)
         self.history.add_message("user", message)
         self.update_status("Processing...")
         self.is_streaming = True
 
-        # Reset streaming state
         self.current_response_content = ""
         self.streaming_pos = None
 
         session_for_message = self.history.current_session
         self.streaming_session = session_for_message
         
-        # Run AI response in separate thread
         self.current_streaming_thread = threading.Thread(
             target=self.get_ai_response,
             args=(message, session_for_message),
@@ -2000,8 +1886,6 @@ if __name__ == "__main__":
                     self.root.after(0, self.update_streaming_response, chunk)
             
             self.root.after(0, self.finalize_response)
-            # Attach assistant message to the session where the prompt originated,
-            # even if the user has switched to another session meanwhile.
             self.history.add_message_to_session(session_for_message, "assistant", self.current_response_content)
             
         except Exception as e:
@@ -2067,7 +1951,6 @@ if __name__ == "__main__":
         btn_frame = tk.Frame(container, bg=colors['bg_light'])
         btn_frame.pack(fill=tk.X, padx=8, pady=(0, 6))
 
-        # Open file button (if we know the filename)
         if filename:
             def open_file():
                 try:
@@ -2085,7 +1968,6 @@ if __name__ == "__main__":
         copy_btn = GlassButton.create(btn_frame, text="Copy", command=copy_to_clipboard)
         copy_btn.pack(side=tk.RIGHT)
 
-        # Embed the whole container into the chat text widget
         self.chat_display.window_create(tk.END, window=container)
         self.chat_display.insert(tk.END, "\n", "ai")
     
@@ -2125,7 +2007,6 @@ if __name__ == "__main__":
                 parts.append(("text", tail, ""))
 
         if not parts:
-            # No fenced code blocks; render as a normal assistant message.
             self.chat_display.insert(tk.END, f"\nVergeGPT: {cleaned}\n", "ai")
         else:
             first_text_rendered = False
@@ -2134,7 +2015,7 @@ if __name__ == "__main__":
                     prefix = "VergeGPT: " if not first_text_rendered else ""
                     self.chat_display.insert(tk.END, f"\n{prefix}{content}\n", "ai")
                     first_text_rendered = True
-                else:  # code snippet
+                else:  
                     filename = None
                     if create_files:
                         filename = self.create_file_from_snippet(content, lang)
@@ -2147,7 +2028,6 @@ if __name__ == "__main__":
         self.chat_display.config(state=tk.NORMAL)
 
         if not full_text.strip():
-            # Nothing to render; just ensure cursor is at the end.
             self.chat_display.insert(tk.END, "\n", "ai")
             self.chat_display.see(tk.END)
             self.chat_display.config(state=tk.DISABLED)
@@ -2155,14 +2035,11 @@ if __name__ == "__main__":
             self.streaming_pos = None
             return
 
-        # Use the shared renderer so this matches how saved sessions look
-        # and also creates files for each new snippet.
         self._render_ai_text_with_snippets(full_text, create_files=True)
 
         self.chat_display.see(tk.END)
         self.chat_display.config(state=tk.DISABLED)
 
-        # Reset streaming markers
         self.streaming_start_index = None
         self.streaming_pos = None
     
@@ -2188,10 +2065,8 @@ if __name__ == "__main__":
             tag = "ai"
             prefix = "VergeGPT"
         
-        # Add spacing between messages and a simple "Name: message" format
         self.chat_display.insert(tk.END, f"\n{prefix}: {message}\n", tag)
         
-        # If message contains YouTube links, show a small preview card with an Open button
         if sender in ("User", "Assistant", "VergeGPT"):
             yt_links = self.extract_youtube_links(message)
             for url in yt_links:
@@ -2207,7 +2082,6 @@ if __name__ == "__main__":
         self.terminal_output.see(tk.END)
         self.terminal_output.config(state=tk.DISABLED)
 
-    # --- YouTube handling & media helpers ---
     def extract_youtube_links(self, text: str):
         """Return a list of YouTube URLs found in text."""
         import re as _re
@@ -2265,7 +2139,6 @@ if __name__ == "__main__":
         prompt = simpledialog.askstring("Image Generation", "Describe the image you want:")
         if not prompt:
             return
-        # Inject a hint so the model knows this is an image request
         text = f"[IMAGE REQUEST] {prompt}"
         self.input_entry.delete("1.0", tk.END)
         self.input_entry.insert("1.0", text)
@@ -2343,7 +2216,6 @@ if __name__ == "__main__":
 
     def update_session_list(self):
         """Refresh sidebar session list and status"""
-        # Update sidebar listbox if it exists
         if hasattr(self, "session_listbox") and self.session_listbox is not None:
             self.session_listbox.delete(0, tk.END)
             for session in self.history.sessions:
@@ -2351,13 +2223,11 @@ if __name__ == "__main__":
                 count = len(session.get("messages", []))
                 self.session_listbox.insert(tk.END, f"{title} ({count})")
 
-            # Highlight current session
             if self.history.current_session in self.history.sessions:
                 idx = self.history.sessions.index(self.history.current_session)
                 self.session_listbox.selection_clear(0, tk.END)
                 self.session_listbox.selection_set(idx)
 
-        # Update status bar with current session title
         if self.history.current_session:
             self.update_status(f"Session: {self.history.current_session['title']}")
 
@@ -2387,8 +2257,6 @@ if __name__ == "__main__":
             if role == "user":
                 self.display_message("User", content)
             elif role == "assistant":
-                # Use the same rich renderer we use for live responses
-                # but do NOT create files again when reloading history.
                 self._render_ai_text_with_snippets(content, create_files=False)
             else:
                 self.display_message("System", content)
@@ -2437,10 +2305,8 @@ if __name__ == "__main__":
         except ValueError:
             return
 
-        # Remove the session
         del self.history.sessions[idx]
 
-        # Decide new current session
         if self.history.sessions:
             new_idx = min(idx, len(self.history.sessions) - 1)
             self.history.current_session = self.history.sessions[new_idx]
@@ -2449,7 +2315,6 @@ if __name__ == "__main__":
 
         self.history.save_sessions()
 
-        # Update UI
         if self.history.current_session:
             self.load_session(self.history.current_session)
             self.update_status(f"Deleted chat: {title}")
@@ -2509,7 +2374,6 @@ if __name__ == "__main__":
         code = self.code_editor.get(1.0, tk.END)
         language = self.code_lang_var.get()
         
-        # Create temp file
         with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False) as tmp:
             tmp.write(code)
             tmp_path = tmp.name
@@ -2524,7 +2388,6 @@ if __name__ == "__main__":
                 if result.stderr:
                     output += f"STDERR:\n{result.stderr}\n"
                 
-                # Show output in terminal section
                 self.show_terminal_output(f"Code Execution Result:\n{output}")
             else:
                 messagebox.showinfo("Info", f"Running {language} code in playground mode")
@@ -2584,7 +2447,6 @@ if __name__ == "__main__":
     def apply_theme(self):
         """Apply selected theme"""
         Config.CURRENT_THEME = self.theme_var.get()
-        # Persist theme choice without overwriting other settings
         self.save_setting('theme', Config.CURRENT_THEME)
         messagebox.showinfo("Theme Applied", f"Theme changed to {Config.CURRENT_THEME}. Restart app to fully apply.")
         self.update_info_bar()
@@ -2613,7 +2475,6 @@ if __name__ == "__main__":
         if enabled:
             self.init_snow_background()
         else:
-            # Clear flakes immediately; animate_snow will no-op while disabled
             if hasattr(self, 'snowflakes'):
                 for flake in self.snowflakes:
                     try:
