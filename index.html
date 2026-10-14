@@ -75,14 +75,12 @@ if __name__ == "__main__":
     </div>
 
     <script>
-        // Auto-resize textarea like ChatGPT
         const input = document.getElementById('user-input');
         input.addEventListener('input', () => {
             input.style.height = 'auto';
             input.style.height = Math.min(input.scrollHeight, 200) + 'px';
         });
 
-        // Simple fake send so UI feels alive without backend
         const messagesEl = document.getElementById('messages');
         const statusEl = document.getElementById('status-indicator');
         document.getElementById('send-btn').addEventListener('click', () => {
@@ -133,7 +131,6 @@ if __name__ == "__main__":
             }, 600);
         });
 
-        // Allow Enter to send, Shift+Enter = newline
         input.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
